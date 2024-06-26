@@ -7,7 +7,7 @@ from langchain_core.prompts.chat import ChatPromptTemplate
 
 ollama = Ollama(base_url='http://localhost:11434', model="llama3")
 
-doc_path = '/home/lucass/rag/resultados/EDITAL-PROAES-N-70-DE-JUNHO-DE-2024_CADASTRO-PARA-BOLSA-PERMANENCIA-DO-MEC-PARA-ESTUDANTES-INDIGENAS-E-QUILOMBOLA-MA-GRADUACAO-PROGRAMA-BPMEC-2024.pdf'
+doc_path = './resultados/EDITAL-PROAES-N-70-DE-JUNHO-DE-2024_CADASTRO-PARA-BOLSA-PERMANENCIA-DO-MEC-PARA-ESTUDANTES-INDIGENAS-E-QUILOMBOLA-MA-GRADUACAO-PROGRAMA-BPMEC-2024.pdf'
 
 pdf_loader = PyPDFLoader(doc_path)
 
@@ -29,7 +29,6 @@ prompt_structure = '''
         Responda a pergunta abaixo:
         {query}
         '''
-
 
 qa_prompt = ChatPromptTemplate.from_messages([
         ('system', '''Você é um funcionário da Universidade Federal de Mato Grosso do Sul que tem conhecimento
