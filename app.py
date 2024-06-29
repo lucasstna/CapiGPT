@@ -5,7 +5,7 @@ from langchain_community.retrievers import BM25Retriever
 from langchain.chains.question_answering import load_qa_chain
 from langchain_core.prompts.chat import ChatPromptTemplate
 
-ollama = Ollama(base_url='http://localhost:11434', model="llama3")
+ollama = Ollama(base_url='http://tempestade.facom.ufms.br:11435', model="phi3:medium")
 
 doc_path = './resultados/EDITAL-PROAES-N-70-DE-JUNHO-DE-2024_CADASTRO-PARA-BOLSA-PERMANENCIA-DO-MEC-PARA-ESTUDANTES-INDIGENAS-E-QUILOMBOLA-MA-GRADUACAO-PROGRAMA-BPMEC-2024.pdf'
 
