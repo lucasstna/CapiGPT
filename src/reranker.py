@@ -9,7 +9,7 @@ def create_reranker(vectorstore: FAISS) -> ContextualCompressionRetriever:
     Creates a reranker retriever using FlashrankRerank.
     
     Args:
-        retriever: Base retriever to compress/rerank results
+        vectorstore: Base vectorstore to compress/rerank results
         
     Returns:
         FAISS vectorstore object
