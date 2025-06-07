@@ -1,0 +1,16 @@
+model,file,faithfulness,answer_relevancy,context_precision,context_recall
+llama3.1:70b,edital-70,0.868,0.806,0.978,0.858
+llama3.1:70b,edital-9,0.678,0.726,0.957,0.746
+llama3.1:70b,regulamento,0.861,0.781,0.946,0.647
+llama3.1:8b,edital-70,0.889,0.795,0.978,0.899
+llama3.1:8b,edital-9,0.629,0.664,0.967,0.74
+llama3.1:8b,regulamento,0.772,0.676,0.946,0.679
+llama3.2:1b,edital-70,0.669,0.647,0.978,0.905
+llama3.2:1b,edital-9,0.539,0.658,0.977,0.784
+llama3.2:1b,regulamento,0.544,0.614,0.94,0.684
+llama3.2:3b,edital-70,0.638,0.648,0.978,0.897
+llama3.2:3b,edital-9,0.558,0.655,0.977,0.747
+llama3.2:3b,regulamento,0.529,0.554,0.94,0.673
+llama3.3:70b,edital-70,0.883,0.847,0.978,0.896
+llama3.3:70b,edital-9,0.791,0.641,0.989,0.733
+llama3.3:70b,regulamento,0.835,0.738,0.94,0.685
