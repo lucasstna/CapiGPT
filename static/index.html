@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CapiGPT - AI-Powered Assistant</title>
+    <style>
+        :root {
+            --primary-color: #0088b7;
+            --secondary-color: #007399;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: left;
+        }
+
+        .hero-image {
+            width: 200px;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .api-section {
+            background-color: white;
+            padding: 3rem 0;
+            margin: 4rem 0;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .endpoint {
+            background-color: #f1f5f9;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #64748b;
+        }
+
+        .interactive-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .parameter-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-field {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        textarea.input-field {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .response-box {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f8fafc;
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            display: none;
+        }
+
+        .response-box.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>CapiGPT</h1>
+                    <p class="subtitle">Um assistente baseado em LLMs para dúvidas de documentos da UFMS</p>
+                </div>
+                <img src="/static/capi.png" alt="CapiGPT Logo" class="hero-image">
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="interactive-section">
+            <h2>Em que posso te ajudar?</h2>
+            <div class="parameter-controls">
+                <div class="control-group">
+                    <textarea id="prompt" class="input-field" rows="4" placeholder="Faça sua pergunta..."></textarea>
+                </div>
+
+                <button id="submit-btn" class="button">Gerar Resposta</button>
+            </div>
+            <div id="response-container" class="response-box"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CapiGPT. No rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Get DOM elements
+        const submitBtn = document.getElementById('submit-btn');
+        const responseContainer = document.getElementById('response-container');
+        const promptInput = document.getElementById('prompt');
+
+        // Clear containers on page load
+        promptInput.value = '';
+        responseContainer.style.display = 'none';
+        responseContainer.textContent = '';
+
+        // Handle form submission
+        submitBtn.addEventListener('click', async () => {
+            const prompt = document.getElementById('prompt').value;
+
+            if (!prompt) {
+                alert('Por favor faça uma pergunta.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Gerando...';
+            responseContainer.style.display = 'block';
+            responseContainer.textContent = 'Gerando resposta...';
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        "query": prompt
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+
+                const data = await response.json();
+                responseContainer.textContent = data.response;
+            } catch (error) {
+                responseContainer.textContent = 'Erro: Falha ao gerar resposta. Por favor, tente novamente.';
+                console.error('Error:', error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Gerar Resposta';
+            }
+        });
+    </script>
+</body>
+</html>
