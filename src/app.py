@@ -28,24 +28,6 @@ async def read_root():
     """
     return FileResponse("static/index.html")
 
-@app.get("/health")
-async def health_check():
-    """
-    Health check endpoint
-    """
-    return {"status": "healthy"}
-
-@app.get("/info")
-async def get_info():
-    """
-    Info endpoint that returns application information
-    """
-    return {
-        "app_name": "CapiGPT",
-        "version": "1.0.0",
-        "description": "A FastAPI Hello World application"
-    }
-
 @app.post("/generate")
 async def generate_response(request: QueryRequest):
     """
