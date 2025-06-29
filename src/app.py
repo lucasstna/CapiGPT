@@ -4,7 +4,7 @@ from langchain_community.llms import Ollama
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from models.generate import QueryRequest
+from models.query import QueryRequest
 
 from rag import RAG
 from vectorstore import load_vectorstore, create_vectorstore_from_dir
