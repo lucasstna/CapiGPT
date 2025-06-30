@@ -202,6 +202,21 @@
             display: block;
         }
 
+        select.input-field {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
@@ -241,11 +256,19 @@
             <h2>Em que posso te ajudar?</h2>
             <div class="parameter-controls">
                 <div class="control-group">
+                    <label for="file-select">Faça uma pergunta sobre algum documento já carregado:</label>
+                    <select id="file-select" class="input-field">
+                        <option value="">Carregando documentos...</option>
+                    </select>
+                </div>
+                <div class="control-group">
                     <textarea id="prompt" class="input-field" rows="4" placeholder="Faça sua pergunta..."></textarea>
                 </div>
-
                 <button id="submit-btn" class="button">Gerar Resposta</button>
             </div>
+            <p>Ou faça upload de um arquivo:</p>
+            <input type="file" id="file-input" accept=".pdf" style="display: none;">
+            <label for="file-input" class="button" style="cursor: pointer;">Carregar PDF</label>
             <div id="response-container" class="response-box"></div>
         </section>
     </main>
@@ -262,17 +285,91 @@
         const responseContainer = document.getElementById('response-container');
         const promptInput = document.getElementById('prompt');
 
+        document.getElementById('file-input').addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (!file) {
+                alert('Por favor, selecione um arquivo PDF.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Falha ao carregar o arquivo');
+                }
+
+                const data = await response.json();
+                responseContainer.textContent = 'Documento carregado com sucesso. Faça sua pergunta!';
+                
+                // Refresh the documents list after successful upload
+                await loadAvailableDocuments();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Erro ao carregar o arquivo. Por favor, tente novamente.');
+            }
+        });
+
         // Clear containers on page load
         promptInput.value = '';
         responseContainer.style.display = 'none';
         responseContainer.textContent = '';
 
+        // Get the select element
+        const fileSelect = document.getElementById('file-select');
+
+        // Function to load available documents
+        async function loadAvailableDocuments() {
+            try {
+                const response = await fetch('/list-documents');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch documents');
+                }
+                const documents = await response.json();
+                
+                // Clear loading option
+                fileSelect.innerHTML = '';
+                
+                // Add default option
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Selecione um documento';
+                fileSelect.appendChild(defaultOption);
+                
+                // Add options for each document
+                documents.forEach(doc => {
+                    const option = document.createElement('option');
+                    option.value = doc;
+                    option.textContent = doc;
+                    fileSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading documents:', error);
+                fileSelect.innerHTML = '<option value="">Erro ao carregar documentos</option>';
+            }
+        }
+
+        // Load documents when page loads
+        window.addEventListener('load', loadAvailableDocuments);
+
         // Handle form submission
         submitBtn.addEventListener('click', async () => {
             const prompt = document.getElementById('prompt').value;
+            const selectedDocument = fileSelect.value;
 
             if (!prompt) {
                 alert('Por favor faça uma pergunta.');
+                return;
+            }
+
+            if (!selectedDocument) {
+                alert('Por favor selecione um documento.');
                 return;
             }
 
@@ -281,6 +378,8 @@
             responseContainer.style.display = 'block';
             responseContainer.textContent = 'Gerando resposta...';
 
+            
+            console.log('Selected Document:', selectedDocument);
             try {
                 const response = await fetch('/generate', {
                     method: 'POST',
@@ -288,7 +387,8 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        "query": prompt
+                        "query": prompt,
+                        "file": selectedDocument
                     }),
                 });
 
