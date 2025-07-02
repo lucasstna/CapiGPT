@@ -38,7 +38,8 @@ async def generate_response(request: QueryRequest):
     Generate a response based on the provided parameters
     '''
     try:
-        vectorstore = create_vectorstore_from_dir(request.file, embeddings_model, documents_dir_path=f'database/{request.file}', persist=False)
+
+        vectorstore = load_vectorstore(f'database/{request.file}', embeddings_model)
 
         # Create retriever from vectorstore
         retriever = create_reranker(vectorstore)
